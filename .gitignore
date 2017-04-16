@@ -1,0 +1,3 @@
+*.sqlite3
+rsqm/settings/local.py
+*__pycache__*
