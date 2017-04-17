@@ -8,11 +8,6 @@ https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/
 """
 
 import os
-import sys
-
-path = r'C:\Users\mnk2\my-project\fancy-rsqm'
-if path not in sys.path:
-    sys.path.append(path)
 
 from django.core.wsgi import get_wsgi_application
 
