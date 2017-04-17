@@ -21,7 +21,7 @@ class Warehouse(models.Model):
 
 class Email(models.Model):
     supplier = models.ForeignKey('Supplier', on_delete=models.CASCADE)
-    email = models.CharField(max_length=30)
+    email = models.CharField(max_length=30, unique=True)
 
     def __str__(self):
         return self.email
