@@ -5,6 +5,9 @@ from apps.supplier.models import Supplier, Warehouse
 class Product(models.Model):
     code = models.IntegerField()
 
+    def __str__(self):
+        return str(self.code)
+
 
 class Match(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -12,7 +15,7 @@ class Match(models.Model):
     supplier_code = models.CharField(max_length=15)
 
     def __str__(self):
-        return self.suplier_code
+        return self.supplier_code
 
 
 class Quantity(models.Model):
