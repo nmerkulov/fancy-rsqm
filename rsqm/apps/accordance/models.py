@@ -23,6 +23,9 @@ class Quantity(models.Model):
     warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)
     quantity = models.IntegerField()
 
+    class Meta:
+        unique_together = ('product', 'warehouse')
+
 
 
 
