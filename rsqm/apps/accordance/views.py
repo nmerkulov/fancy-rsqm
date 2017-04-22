@@ -24,31 +24,40 @@ def test(request):
     for rownum in range(sheet.nrows):
         row.append(sheet.row_values(rownum))
     if row[0] == ['Product', 'Quantity', 'Warehouse']:
-        row = row[1:0]
+        print(row, 'row')
+        row = row[1:]
+        print(row, 'row')
         for item in row:
+            print('in row', len(row))
             try:
+                print('warehouse')
                 wareh = Warehouse.objects.get(name=str(item[2]))
                 try:
-                    prod = Product(code=int(item[0]))
+                    print('product')
+                    prod = Product.objects.get(code=int(item[0]))
                     try:
                         qty = Quantity(warehouse=wareh, product=prod)
                         qty.quantity = int(item[1])
                         qty.save()
+                        message.append(qty.quantity)
                     except ObjectDoesNotExist:
                         Quantity.objects.create(werehouse=wareh, prduct=prod, quantity=int(item[1]))
                         message.append('new entry', item)
                 except ObjectDoesNotExist:
-                    message.append('no such product in base', item[0])
+                    print(int(item[0]))
+                    message.append('no such product in base ' + str(int(item[0])) + ' ')
             except ObjectDoesNotExist:
-                message.append('unknown warehouse, check your input doc', item[2])
+                message.append('unknown warehouse, check your input doc' + str(item[2] + ' '))
 
-    return HttpResponse(message)
+    return HttpResponse(''.join(message))
 
 
 def initdb(request, size=3):
 
     def testinitdb(num):
         num = str(num)
+        product = Product(code=1001 * (int(num) + 1))
+        product.save()
         tmpsupplier = Supplier(name='supplier ' + num)
         tmpsupplier.save()
         tmpemail = Email(supplier=tmpsupplier, email='s@s' + num + '.ru')
