@@ -19,12 +19,18 @@ class Match(models.Model):
 
 
 class Quantity(models.Model):
+    name = models.CharField(max_length=30)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)
     quantity = models.IntegerField()
 
     class Meta:
         unique_together = ('product', 'warehouse')
+
+
+    def __str__(self):
+        return self.name
+
 
 
 
