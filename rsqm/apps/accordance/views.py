@@ -93,5 +93,31 @@ def generatexls(request, path = 'example.xls'):
     return HttpResponse('generated xls')
 
 
+def supplierform(request):
+    print('supplier form')
+    supplier = Supplier.objects.all()
+    context = {
+        'supplier': []
+    }
+    for item in supplier:
+        context['supplier'].append(item)
+    return render(request, 'supplier_form.html', context)
+
+
+def warehouseform(request, *args):
+    print(args)
+    supplier = args[0]
+    supplier = Supplier.objects.get(name=supplier)
+    print(supplier)
+    warehouse = Warehouse.objects.filter(supplier=supplier)
+
+    context = {
+        'warehouse': []
+    }
+    for item in warehouse:
+        context['warehouse'].append(item.name)
+    return render(request, 'warehouse_form.html', context)
+
+
 
 
