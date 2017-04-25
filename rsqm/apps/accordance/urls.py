@@ -1,11 +1,7 @@
 from django.conf.urls import url
-from .views import test, initdb, generatexls, supplierform, warehouseform
+from .views import test, initdb, generatexls, supplier_list, upload_quantity
 
 urlpatterns = [
-    url(r'^new/', test),
-    url(r'^initdb/', initdb),
-    url(r'^genxl/', generatexls),
-
-    url(r'^rest/(.*?)/', warehouseform),
-    url(r'^rest/', supplierform),
+    url(r'^(\d+)/$', upload_quantity),
+    url(r'^', supplier_list),
 ]
