@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from apps.supplier.models import Supplier, Email
 from django.views.generic import ListView, DetailView
 from apps.supplier.forms import SupplierForm, EmailFormSet, EmailForm
@@ -14,7 +14,6 @@ class SupplierListView(ListView):
 class SupplierDetailView(DetailView):
     model = Supplier
     def req_path(request):
-        print (request.path)
         return request.path
 
 
@@ -50,7 +49,7 @@ def add_supplier_card(request):
 
 
 def edit_supplier_card(request, s_id):
-    instance = Supplier.objects.get(id=s_id)
+    instance = get_object_or_404(Supplier, id=s_id)
     email_list = list(instance.email_set.all())
     EmailFormSet2 = inlineformset_factory(Supplier, Email,
                                           form=EmailForm, extra=2)
@@ -72,7 +71,7 @@ def edit_supplier_card(request, s_id):
             print(formset.cleaned_data)
             if len(dict) > 0:
                 if dict['DELETE'] == True:
-                    obj = Email.objects.get(id=dict['id'].id)
+                    obj = get_object_or_404(Email, id=dict['id'].id)
                     obj.delete()
                 elif dict['id'] == None:
                     new_email = Email.objects.create(
@@ -92,6 +91,6 @@ def edit_supplier_card(request, s_id):
     return render(request, 'edit_card.html', context)
 
 def delete_supplier_card(request, s_id):
-    instance = Supplier.objects.get(id=s_id)
+    instance = get_object_or_404(Supplier, id=s_id)
     instance.delete()
     return redirect('sup_list')
