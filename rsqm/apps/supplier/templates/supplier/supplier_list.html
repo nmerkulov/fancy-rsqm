@@ -1,0 +1,7 @@
+{% block content %}
+    {% for supplier in supplier_list %}
+        <p><a href="{{ supplier.get_absolute_url }}">{{ supplier.name }}</a></p>
+    {% empty %}
+    <p>No suppliers</p>
+    {% endfor %}
+{% endblock %}
