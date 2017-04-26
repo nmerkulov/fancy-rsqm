@@ -9,7 +9,7 @@
     {{ supplier_form.as_p }}
     {{ formset.management_form }}
     {% for form in formset %}
-        {{ form }}
+        <p>{{ form }}</p>
     {% endfor %}
       <input type="submit" value="Save"/>
   </form>
