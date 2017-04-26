@@ -3,13 +3,10 @@ from apps.supplier.models import Supplier, Warehouse
 
 
 class Product(models.Model):
-    code = models.IntegerField()
+    code = models.IntegerField(unique=True)
 
     def __str__(self):
         return str(self.code)
-
-    class Meta:
-        unique_together = ('code',)
 
 
 class Match(models.Model):
@@ -22,7 +19,6 @@ class Match(models.Model):
 
 
 class Quantity(models.Model):
-    name = models.CharField(max_length=30)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)
     quantity = models.IntegerField()

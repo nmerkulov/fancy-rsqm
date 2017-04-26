@@ -7,8 +7,8 @@
 <body>
 <label for="supplier">Choose Supplier</label>
 <ul>
-    {% for link in supplier %}
-    <li><a href="{{link.id}}/">{{ link.name }}</a></li>
+    {% for object in object_list %}
+    <li><a href="{{object.id}}/">{{ object.name }}</a></li>
     {% endfor %}
 </ul>
 </body>

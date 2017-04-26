@@ -26,34 +26,18 @@ def initdb(request, size=3):
 
 
 def supplier_list(request):
-    supplier = Supplier.objects.all()
     context = {
-        'supplier': []
+        'object_list': Supplier.objects.all()
     }
-
-    for item in supplier:
-        item = {
-            'id': item.id,
-            'name': item
-        }
-        context['supplier'].append(item)
-
     return render(request, 'supplier_list.html', context)
 
 
 def upload_quantity(request, supplier_id):
     if request.method == 'GET':
         supplier = Supplier.objects.get(pk=supplier_id)
-        warehouse = Warehouse.objects.filter(supplier=supplier)
         context = {
-            'warehouse': []
+            'object_list': Warehouse.objects.filter(supplier=supplier)
         }
-        for item in warehouse:
-            item = {
-                'id': item.id,
-                'name': item
-            }
-            context['warehouse'].append(item)
         return render(request, 'upload_quantity.html', context)
 
     elif request.method == 'POST':

@@ -9,8 +9,8 @@
     {% csrf_token %}
     <label for="warehouse_list">Choose Warehouse</label>
     <select id="warehouse_list" name="warehouse" required>
-        {% for item in warehouse %}
-        <option value="{{ item.id }}">{{item.name}}</option>
+        {% for object in object_list %}
+        <option value="{{ object.id }}">{{object.name}}</option>
         {% endfor %}
     </select>
     <p>Load your quantity file</p>
