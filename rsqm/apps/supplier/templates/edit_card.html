@@ -7,8 +7,8 @@
   <form method="post" action="">
     {% csrf_token %}
     {{ supplier_form.as_p }}
-    {{ formset.management_form }}
-    {% for form in formset %}
+    {{ email_formset.management_form }}
+    {% for form in email_formset %}
         <p>{{ form }}</p>
     {% endfor %}
       <input type="submit" value="Save"/>
