@@ -3,7 +3,8 @@ from apps.supplier.views import (edit_supplier_card,
                                  SupplierListView,
                                  SupplierDetailView,
                                  add_supplier_card,
-                                 delete_supplier_card)
+                                 delete_supplier_card,
+                                 )
 
 
 urlpatterns = [

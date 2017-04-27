@@ -8,12 +8,8 @@ class SupplierForm(ModelForm):
         exclude = ()
 
 
-class EmailForm(ModelForm):
-    class Meta:
-        model = Email
-        fields= ['email', 'id', ]
-        # exclude = ()
-
-
-EmailFormSet = inlineformset_factory(Supplier, Email,
-                                        form=EmailForm, can_delete=False, extra=2)
+EmailFormSet = inlineformset_factory(Supplier,
+                                     Email,
+                                     fields=('email',),
+                                     extra=2
+                                     )

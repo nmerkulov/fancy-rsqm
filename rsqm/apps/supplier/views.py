@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from apps.supplier.models import Supplier, Email
+from apps.supplier.models import Supplier
 from django.views.generic import ListView, DetailView
-from apps.supplier.forms import SupplierForm, EmailFormSet, EmailForm
+from apps.supplier.forms import SupplierForm, EmailFormSet
 from django.http import HttpResponseRedirect
-from django.forms import inlineformset_factory
 
 
 class SupplierListView(ListView):
@@ -13,6 +12,7 @@ class SupplierListView(ListView):
 
 class SupplierDetailView(DetailView):
     model = Supplier
+
     def req_path(request):
         return request.path
 
@@ -20,75 +20,40 @@ class SupplierDetailView(DetailView):
 def add_supplier_card(request):
     if request.method == 'POST':
         supplier_form = SupplierForm(request.POST)
-        email_formset = EmailFormSet(request.POST or None, prefix='emails')
-        if supplier_form.is_valid() and email_formset.is_valid():
-            name = supplier_form.cleaned_data['name']
-            column_remain = supplier_form.cleaned_data['column_remain']
-            column_code = supplier_form.cleaned_data['column_code']
-            new_sup = Supplier.objects.create(
-                            name=name,
-                            column_remain=column_remain,
-                            column_code=column_code,
-                                    )
-            new_sup.save()
-            for dicts in email_formset.cleaned_data:
-                if len(dicts) > 0:
-                    new_email = Email.objects.create(
-                                    supplier_id=new_sup.id, 
-                                    email=dicts['email']
-                                        )
-                    new_email.save()
-            return HttpResponseRedirect('/supplier/')
+        if supplier_form.is_valid():
+            supplier_instance = supplier_form.save(commit=False)
+            email_formset = EmailFormSet(request.POST or None,
+                                         prefix='emails',
+                                         instance=supplier_instance)
+            if email_formset.is_valid():
+                supplier_instance.save()
+                email_formset.save()
+                return HttpResponseRedirect('/supplier/')
     else:
         supplier_form = SupplierForm()
         email_formset = EmailFormSet(prefix='emails')
     return render(request, 'create_card.html', {
         'supplier_form': supplier_form,
-        'email_formset': email_formset,
-        })
+        'email_formset': email_formset, })
 
 
 def edit_supplier_card(request, s_id):
-    instance = get_object_or_404(Supplier, id=s_id)
-    email_list = list(instance.email_set.all())
-    EmailFormSet2 = inlineformset_factory(Supplier, Email,
-                                          form=EmailForm, extra=2)
-    if len(email_list) == 1:
-        initials = [{'email': email_list[0].email, 'id': email_list[0].id}]
-    elif len(email_list) > 1:
-        initials = [{'email': email_list[0].email,
-                     'id': email_list[0].id},
-                    {'email': email_list[1].email,
-                     'id': email_list[1].id}]
-    else:
-        initials = None
-    supplier_form = SupplierForm(request.POST or None, instance=instance)
-    formset = EmailFormSet2(request.POST or None, initial=initials)
-    if supplier_form.is_valid() and formset.is_valid():
-        instance = supplier_form.save(commit=False)
-        instance.save()
-        for dict in formset.cleaned_data:
-            print(formset.cleaned_data)
-            if len(dict) > 0:
-                if dict['DELETE'] == True:
-                    obj = get_object_or_404(Email, id=dict['id'].id)
-                    obj.delete()
-                elif dict['id'] == None:
-                    new_email = Email.objects.create(
-                                    supplier_id=instance.id,
-                                    email=dict['email']
-                                        )
-                    new_email.save()
-                else:
-                    obj.email = dict['email']
-                    obj.save()
+    supplier_instance = get_object_or_404(Supplier, id=s_id)
+    supplier_form = SupplierForm(request.POST or None,
+                                 instance=supplier_instance)
+    email_formset = EmailFormSet(request.POST or None,
+                                 instance=supplier_instance)
+    if supplier_form.is_valid() and email_formset.is_valid():
+        supplier_instance = supplier_form.save()
+        supplier_instance.save()
+        email_formset.save()
         return HttpResponseRedirect('/supplier/')
     context = {
         'supplier_form': supplier_form,
-        'instance': instance,
-        'formset': formset
-        }
+        'supplier_instance': supplier_instance,
+        'email_formset': email_formset, }
     return render(request, 'edit_card.html', context)
+
 
 def delete_supplier_card(request, s_id):
     instance = get_object_or_404(Supplier, id=s_id)
