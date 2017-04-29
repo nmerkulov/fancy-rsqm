@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Supplier management</title>
+</head>
+<body>
+  <form method="post" action="">
+    {% csrf_token %}
+    {{ supplier_form.non_field_errors }}
+    {% include 'include/form_field.html' with field=supplier_form.name %}
+    {% include 'include/form_field.html' with field=supplier_form.column_remain %}
+    {% include 'include/form_field.html' with field=supplier_form.column_code %}
+    {{ email_formset.management_form }}
+    {% for form in email_formset %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        <div class='emailField'>
+            {{ form.email.errors }}
+        <label for="{{ form.email.id_email">Email:</label>
+            {{ form.email }}
+            {{ form.id }}
+        </div>
+            {% if email_formset.can_delete %}
+                <div class="deleteField">
+                <label for="{{ form.DELETE.id_DELETE">Delete email:</label>
+                    {{ form.DELETE }}
+                </div>
+            {% endif %}
+    {% endfor %}
+    <input type="submit" value="Save"/>
+  </form>
+
+</body>
+</html>

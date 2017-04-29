@@ -21,7 +21,7 @@ def add_supplier_card(request):
     if request.method == 'POST':
         supplier_form = SupplierForm(request.POST)
         if supplier_form.is_valid():
-            supplier_instance = supplier_form.save(commit=False)
+            supplier_instance = supplier_form.save()
             email_formset = EmailFormSet(request.POST or None,
                                          prefix='emails',
                                          instance=supplier_instance)
@@ -32,7 +32,7 @@ def add_supplier_card(request):
     else:
         supplier_form = SupplierForm()
         email_formset = EmailFormSet(prefix='emails')
-    return render(request, 'create_card.html', {
+    return render(request, 'management_supplier.html', {
         'supplier_form': supplier_form,
         'email_formset': email_formset, })
 
@@ -52,7 +52,7 @@ def edit_supplier_card(request, s_id):
         'supplier_form': supplier_form,
         'supplier_instance': supplier_instance,
         'email_formset': email_formset, }
-    return render(request, 'edit_card.html', context)
+    return render(request, 'management_supplier.html', context)
 
 
 def delete_supplier_card(request, s_id):
