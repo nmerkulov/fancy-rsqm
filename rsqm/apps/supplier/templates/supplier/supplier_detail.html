@@ -1,0 +1,11 @@
+{% block content %}
+    <p>Supplier: {{ supplier.name }}</p>
+    <p>E-mail(s):</p>
+    {% for email in supplier.email_set.all %}
+        <p>{{ email.email }}</p>
+    {% endfor %}
+    <p>Column with remain: {{ supplier.column_remain }}</p>
+    <p>Column with code: {{ supplier.column_code }}</p>
+    <a href="{% url 'edit_card' supplier.id %}">Edit</a>
+    <a href="{% url 'delete_card' supplier.id %}">Delete</a>
+{% endblock %}
