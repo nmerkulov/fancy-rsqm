@@ -9,6 +9,8 @@ class QuantityAdmin(admin.ModelAdmin):
 class MatchAdmin(admin.ModelAdmin):
     list_display = ['product', 'supplier_code', 'supplier']
 
+
+
 admin.site.register(Product)
 admin.site.register(Match, MatchAdmin)
 admin.site.register(Quantity, QuantityAdmin)

@@ -3,7 +3,7 @@ from apps.supplier.models import Supplier, Warehouse
 
 
 class Product(models.Model):
-    code = models.IntegerField()
+    code = models.IntegerField(unique=True)
 
     def __str__(self):
         return str(self.code)
@@ -25,6 +25,11 @@ class Quantity(models.Model):
 
     class Meta:
         unique_together = ('product', 'warehouse')
+
+
+    def __str__(self):
+        return self.name
+
 
 
 
