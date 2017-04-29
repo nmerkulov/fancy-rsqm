@@ -26,7 +26,6 @@ def add_supplier_card(request):
                                          prefix='emails',
                                          instance=supplier_instance)
             if email_formset.is_valid():
-                supplier_instance.save()
                 email_formset.save()
                 return HttpResponseRedirect('/supplier/')
     else:

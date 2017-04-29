@@ -7,9 +7,9 @@
   <form method="post" action="">
     {% csrf_token %}
     {{ supplier_form.non_field_errors }}
-    {% include 'include/form_field.html' with field=supplier_form.name %}
-    {% include 'include/form_field.html' with field=supplier_form.column_remain %}
-    {% include 'include/form_field.html' with field=supplier_form.column_code %}
+    {% include 'includes/form_field.html' with field=supplier_form.name %}
+    {% include 'includes/form_field.html' with field=supplier_form.column_remain %}
+    {% include 'includes/form_field.html' with field=supplier_form.column_code %}
     {{ email_formset.management_form }}
     {% for form in email_formset %}
         {% for hidden in form.hidden_fields %}

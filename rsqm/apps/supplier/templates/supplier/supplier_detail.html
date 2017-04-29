@@ -6,6 +6,8 @@
     {% endfor %}
     <p>Column with remain: {{ supplier.column_remain }}</p>
     <p>Column with code: {{ supplier.column_code }}</p>
-    <a href="{{ request.path }}edit/">Edit</a>
-    <a href="{{ request.path }}delete/">Delete</a>
+    {% url 'edit_card' supplier.id as edit_url %}
+    {% url 'delete_card' supplier.id as delete_url %}
+    <a href="{{ edit_url }}">Edit</a>
+    <a href="{{ delete_url }}">Delete</a>
 {% endblock %}

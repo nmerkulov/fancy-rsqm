@@ -1,5 +1,6 @@
 {% block content %}
-    <a href="{{ request.path }}add/"><h4>Add new supplier card</h4></a>
+    {% url 'add_card' as add_url %}
+    <a href="{{ add_url }}"><h4>Add new supplier card</h4></a>
     <hr>
     {% for supplier in supplier_list %}
         <p><a href="{{ supplier.get_absolute_url }}">{{ supplier.name }}</a></p>
