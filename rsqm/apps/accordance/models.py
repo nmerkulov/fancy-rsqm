@@ -1,5 +1,5 @@
 from django.db import models
-from apps.supplier.models import Supplier, Warehouse
+from ..supplier.models import Supplier, Warehouse
 
 
 class Product(models.Model):
