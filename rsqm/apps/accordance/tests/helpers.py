@@ -1,4 +1,4 @@
-from ....apps.supplier.models import Warehouse, Supplier, Email
+from ...supplier.models import Warehouse, Supplier, Email
 from ..models import Product
 
 
