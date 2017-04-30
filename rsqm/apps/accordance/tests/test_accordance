@@ -1,0 +1,14 @@
+from django.test import Client
+from django.test import TestCase
+from .helpers import initdb
+from django.http import Http404
+
+class AccoradnceTestCase(TestCase):
+    def setUp(self):
+        initdb(3)
+
+    def test_supplier_id_access_fail(self):
+            self.assertEqual(Client.get('/supply/' + str(10) + '/'), Http404("Supplier does not exist"))
+
+    def test_supplier_id_access_fail(self):
+        self.assertEqual(Client.get('/supply/' + str(1) + '/'), Http404("Supplier does not exist"))

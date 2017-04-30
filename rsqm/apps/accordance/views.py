@@ -3,27 +3,9 @@ from django.http import HttpResponse
 from .models import Quantity, Product
 from ..supplier.models import Warehouse, Supplier, Email
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404
 import xlrd
 import xlwt
-
-def initdb(request, size=3):
-
-    def testinitdb(num):
-        num = str(num)
-        product = Product(code=1001 * (int(num) + 1))
-        product.save()
-        tmpsupplier = Supplier(name='supplier ' + num)
-        tmpsupplier.save()
-        tmpemail = Email(supplier=tmpsupplier, email='s@s' + num + '.ru')
-        tmpemail.save()
-        tmpwarehouse = Warehouse(supplier=tmpsupplier, name='warehouse ' + num, city='city ' + num)
-        tmpwarehouse.save()
-
-    for i in range(size):
-        testinitdb(i)
-
-    return HttpResponse('db init success')
-
 
 def supplier_list(request):
     context = {
@@ -34,11 +16,15 @@ def supplier_list(request):
 
 def upload_quantity(request, supplier_id):
     if request.method == 'GET':
-        supplier = Supplier.objects.get(pk=supplier_id)
-        context = {
-            'object_list': Warehouse.objects.filter(supplier=supplier)
-        }
-        return render(request, 'upload_quantity.html', context)
+        try:
+            supplier = Supplier.objects.get(pk=supplier_id)
+            context = {
+                'object_list': Warehouse.objects.filter(supplier=supplier)
+            }
+            return render(request, 'upload_quantity.html', context)
+        except ObjectDoesNotExist:
+            raise Http404("Supplier does not exist")
+
 
     elif request.method == 'POST':
         input_excel = request.FILES['quantity']
