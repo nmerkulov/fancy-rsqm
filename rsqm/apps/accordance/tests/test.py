@@ -6,12 +6,12 @@ from django.http import Http404
 
 class AccordanceTestCase(TestCase):
     def setUp(self):
-        initdb(3)
+        self.suppliers_id_list = initdb(3)
 
     def test_supplier_id_access_fail(self):
         c = Client()
-        self.assertEqual(c.get('/supply/' + str(10) + '/').status_code, 404)
+        self.assertEqual(c.get('/supply/%d/' % (max(self.suppliers_id_list) + 1)).status_code, 404)
 
     def test_supplier_id_access_fine(self):
         c = Client()
-        self.assertEqual(c.get('/supply/' + str(1) + '/').status_code, 200)
+        self.assertEqual(c.get('/supply/%d/' % self.suppliers_id_list[0]).status_code, 200)

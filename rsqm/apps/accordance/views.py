@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Quantity, Product
 from ..supplier.models import Warehouse, Supplier, Email
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404
 import xlrd
 import xlwt
+
 
 def supplier_list(request):
     context = {
@@ -16,14 +16,11 @@ def supplier_list(request):
 
 def upload_quantity(request, supplier_id):
     if request.method == 'GET':
-        try:
-            supplier = Supplier.objects.get(pk=supplier_id)
-            context = {
-                'object_list': Warehouse.objects.filter(supplier=supplier)
-            }
-            return render(request, 'upload_quantity.html', context)
-        except ObjectDoesNotExist:
-            raise Http404("Supplier does not exist")
+        supplier = get_object_or_404(Supplier, pk=supplier_id)
+        context = {
+            'object_list': Warehouse.objects.filter(supplier=supplier)
+        }
+        return render(request, 'upload_quantity.html', context)
 
 
     elif request.method == 'POST':
