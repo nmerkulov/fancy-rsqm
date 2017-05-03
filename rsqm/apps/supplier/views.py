@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from apps.supplier.models import Supplier
+from .models import Supplier
 from django.views.generic import ListView, DetailView
-from apps.supplier.forms import SupplierForm, EmailFormSet
+from .forms import SupplierForm, EmailFormSet
 from django.http import HttpResponseRedirect
 
 
