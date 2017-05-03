@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from apps.supplier.models import Supplier
+from apps.accordance.models import Product, Match
+from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView, DetailView
 from apps.supplier.forms import SupplierForm, EmailFormSet
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
+import xlrd
 
 
 class SupplierListView(ListView):
@@ -13,8 +16,35 @@ class SupplierListView(ListView):
 class SupplierDetailView(DetailView):
     model = Supplier
 
-    def req_path(request):
-        return request.path
+    # def req_path(request):
+        # return request.path
+
+def upload_matches(request, s_id):
+    if request.method == 'GET':
+        return render(request, 'upload.html')
+    elif request.method == 'POST':
+        upload_xls = request.FILES['matches']
+        workbook = xlrd.open_workbook(file_contents=upload_xls.read())
+        sheet = workbook.sheet_by_index(0)
+        count = 0
+        for rownum in range(sheet.nrows):
+            row = sheet.row_values(rownum)
+            try:
+                product = Product.objects.get(code=int(row[0]))
+            except ObjectDoesNotExist:
+                product = Product.objects.create(code=int(row[0]))
+                product.save()
+            try:
+                match = Match.objects.get(supplier_code=int(row[1]),
+                                          supplier_id=s_id)
+
+            except ObjectDoesNotExist:
+                match = Match.objects.create(supplier_code=int(row[1]),
+                                             supplier_id=s_id,
+                                             product_id=product.id)
+                match.save()
+                count += 1
+        return HttpResponse('Successful added {}'.format(count))
 
 
 def add_supplier_card(request):
