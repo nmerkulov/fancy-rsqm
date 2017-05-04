@@ -1,8 +1,8 @@
 from django.conf.urls import url
-from .views import supplier_list, upload_quantity, QuantityTable
+from .views import supplier_list, upload_quantity, StockTable
 
 urlpatterns = [
     url(r'^upload/(?P<supplier_id>\d+)/$', upload_quantity),
     url(r'^upload/$', supplier_list),
-    url(r'^stock/$', QuantityTable.as_view()),
+    url(r'^stock/$', StockTable.as_view()),
 ]

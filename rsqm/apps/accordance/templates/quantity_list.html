@@ -9,7 +9,7 @@
             <th>Quantity</th>
             <th>Date</th>
         </tr>
-        {% for item in object_list %}
+        {% for item in object_list.stock %}
             <tr>
                 <td>{{item.warehouse}}</td>
                 <td>{{item.product}}</td>

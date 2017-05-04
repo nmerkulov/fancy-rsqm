@@ -67,20 +67,24 @@ def upload_quantity(request, supplier_id):
         return HttpResponse(message)
 
 
-class QuantityTable(ListView):
+class StockTable(ListView):
     context_object_name = 'object_list'
     template_name = 'quantity_list.html'
 
-    queryset = []
-    supplier_list = Supplier.objects.all()
-    for supplier in supplier_list:
-        warehouse_list = Warehouse.objects.filter(supplier=supplier)
-        warehouse_list_id = list(map(lambda item: item.pk, warehouse_list))
-        non_empty_qty = Quantity.objects.filter(warehouse__in=warehouse_list)
-        non_empty_qty = list(filter(lambda item: item.quantity > 0, non_empty_qty))
-        if len(non_empty_qty) > 0:
-            queryset.extend(non_empty_qty)
-
+    def get_queryset(self):
+        queryset = {
+            'suppliers': [],
+            "stock": []
+        }
+        supplier_list = Supplier.objects.all()
+        for supplier in supplier_list:
+            warehouse_list = Warehouse.objects.filter(supplier=supplier)
+            non_empty_qty = Quantity.objects.filter(warehouse__in=warehouse_list)
+            if len(list(filter(lambda item: item.quantity > 0, non_empty_qty))) > 0:
+                queryset['stock'].extend(non_empty_qty)
+                queryset['suppliers'].append(supplier)
+        print(queryset)
+        return queryset
 
 
 
