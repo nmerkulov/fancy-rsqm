@@ -1,5 +1,9 @@
-
-{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Supplier management</title>
+</head>
+<body>
     <h2>Quantity Table</h2>
     <table border="1" style="border-collapse: collapse">
         <caption>Warehouse stock</caption>
@@ -18,4 +22,6 @@
             </tr>
         {% endfor %}
     </table>
-{% endblock %}
+    <a href="{% url 'download_stock' %}"><h4>download excel file</h4></a>
+</body>
+</html>
