@@ -83,7 +83,6 @@ class StockTable(ListView):
             if len(list(filter(lambda item: item.quantity > 0, non_empty_qty))) > 0:
                 queryset['stock'].extend(non_empty_qty)
                 queryset['suppliers'].append(supplier)
-        print(queryset)
         return queryset
 
 
