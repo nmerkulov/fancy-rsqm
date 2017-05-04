@@ -1,4 +1,4 @@
-from apps.supplier.models import Email, Supplier
+from .models import Email, Supplier
 from django.forms import ModelForm, inlineformset_factory
 
 

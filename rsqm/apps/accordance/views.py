@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .models import Quantity, Product
 from ..supplier.models import Warehouse, Supplier, Email
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.generic import ListView, DetailView
+from itertools import chain
 import xlrd
 import xlwt
 
@@ -21,7 +23,6 @@ def upload_quantity(request, supplier_id):
             'object_list': Warehouse.objects.filter(supplier=supplier)
         }
         return render(request, 'upload_quantity.html', context)
-
 
     elif request.method == 'POST':
         input_excel = request.FILES['quantity']
@@ -64,6 +65,23 @@ def upload_quantity(request, supplier_id):
         message = ' '.join(message)
         print(message)
         return HttpResponse(message)
+
+
+class QuantityTable(ListView):
+    context_object_name = 'object_list'
+    template_name = 'quantity_list.html'
+
+    queryset = []
+    supplier_list = Supplier.objects.all()
+    for supplier in supplier_list:
+        warehouse_list = Warehouse.objects.filter(supplier=supplier)
+        warehouse_list_id = list(map(lambda item: item.pk, warehouse_list))
+        non_empty_qty = Quantity.objects.filter(warehouse__in=warehouse_list)
+        non_empty_qty = list(filter(lambda item: item.quantity > 0, non_empty_qty))
+        if len(non_empty_qty) > 0:
+            queryset.extend(non_empty_qty)
+
+
 
 
 
