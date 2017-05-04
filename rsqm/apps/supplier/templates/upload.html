@@ -6,10 +6,16 @@
 </head>
 <body>
 <a style="color: red"> {{ alert }}</a>
-<form enctype="multipart/form-data" method="post">
+<form enctype="multipart/form-data" method="post" action="">
     {% csrf_token %}
-    <p>Load your file</p>
-   <p><input type="file" name="matches" accept="application/excel">
+    {{ upload_form.non_field_errors }}
+    <div class="uploadFormMatches">
+    <p>{{ upload_form.matches.label_tag}}</p>
+    <p>
+        {{  upload_form.matches.errors }}
+        {{  upload_form.matches }}
+    </p>
+    </div>
    <input type="submit" value="upload"></p>
 </form>
 </body>

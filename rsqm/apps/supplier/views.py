@@ -3,7 +3,7 @@ from apps.supplier.models import Supplier
 from apps.accordance.models import Product, Match
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView, DetailView
-from apps.supplier.forms import SupplierForm, EmailFormSet
+from apps.supplier.forms import SupplierForm, EmailFormSet, MatchesUploadForm
 from django.http import HttpResponse, HttpResponseRedirect
 import xlrd
 
@@ -20,16 +20,17 @@ class SupplierDetailView(DetailView):
         # return request.path
 
 def upload_matches(request, s_id):
-    if request.method == 'GET':
-        return render(request, 'upload.html')
-    elif request.method == 'POST':
-        if request.FILES:
+    if request.method == 'POST':
+        upload_form = MatchesUploadForm(request.POST, request.FILES)
+        if upload_form.is_valid():
             upload_xls = request.FILES['matches']
             workbook = xlrd.open_workbook(file_contents=upload_xls.read())
             sheet = workbook.sheet_by_index(0)
             count = 0
             for rownum in range(sheet.nrows):
                 row = sheet.row_values(rownum)
+                # product = Product.objects.create(code=int(row[0]))
+                # product.save()
                 product = get_object_or_404(Product, code=int(row[0]))
                 try:
                     match = Match.objects.get(supplier_code=int(row[1]),
@@ -42,9 +43,10 @@ def upload_matches(request, s_id):
                     match.save()
                     count += 1
             return HttpResponse('Successful added {}'.format(count))
-        else:
-            alert = "Press 'Choose file' for upload"
-            return render(request, 'upload.html', {'alert': alert})
+    else:
+        upload_form = MatchesUploadForm()
+    return render(request, 'upload.html', {'upload_form': upload_form})
+
 
 def add_supplier_card(request):
     if request.method == 'POST':
