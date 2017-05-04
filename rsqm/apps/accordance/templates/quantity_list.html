@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Supplier management</title>
+</head>
+<body>
+    <h2>Quantity Table</h2>
+    <table border="1" style="border-collapse: collapse">
+        <caption>Warehouse stock</caption>
+        <tr>
+            <th>Warehouse</th>
+            <th>Product Code</th>
+            <th>Quantity</th>
+            <th>Date</th>
+        </tr>
+        {% for item in object_list.stock %}
+            <tr>
+                <td>{{item.warehouse}}</td>
+                <td>{{item.product}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.date}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'download_stock' %}"><h4>download excel file</h4></a>
+</body>
+</html>
