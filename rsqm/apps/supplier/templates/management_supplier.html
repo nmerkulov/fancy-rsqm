@@ -4,7 +4,7 @@
     <title>Supplier management</title>
 </head>
 <body>
-  <form method="post" action="" novalidate>
+  <form method="post" action="">
     {% csrf_token %}
     {{ supplier_form.non_field_errors }}
     {% include 'includes/form_field.html' with field=supplier_form.name %}
