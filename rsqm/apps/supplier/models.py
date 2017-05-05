@@ -19,6 +19,7 @@ class Warehouse(models.Model):
     supplier = models.ForeignKey('Supplier', on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     city = models.CharField(max_length=30)
+    date = models.DateField(auto_now=True, auto_now_add=False)
 
     class Meta:
         unique_together = ('city', 'supplier')

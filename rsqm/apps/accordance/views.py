@@ -3,10 +3,30 @@ from django.http import HttpResponse
 from .models import Quantity, Product
 from ..supplier.models import Warehouse, Supplier, Email
 from django.core.exceptions import ObjectDoesNotExist
-from django.views.generic import ListView, DetailView
-from itertools import chain
+from django.views.generic import ListView
+from django.db.models import Max
 import xlrd
 import xlwt
+
+
+def download_file(request):
+    queryset = my_get_queryset()
+
+    wb = xlwt.Workbook()
+    ws = wb.add_sheet('Stock Table')
+
+    data_for_xls = list(queryset['stock'])
+    for index, item in enumerate(data_for_xls):
+        ws.write(index, 0, item.warehouse.name)
+        ws.write(index, 1, item.product.code)
+        ws.write(index, 2, item.quantity)
+        ws.write(index, 3, '%d.%d.%d' % (item.date.day, item.date.month, item.date.year))
+
+    response = HttpResponse(content_type='application/excel')
+    response['Content-Disposition'] = 'attachment; filename=example.xls'
+    response['Content-Type'] = 'application/excel'
+    wb.save(response)
+    return response
 
 
 def supplier_list(request):
@@ -72,18 +92,15 @@ class StockTable(ListView):
     template_name = 'quantity_list.html'
 
     def get_queryset(self):
-        queryset = {
-            'suppliers': [],
-            "stock": []
-        }
-        supplier_list = Supplier.objects.all()
-        for supplier in supplier_list:
-            warehouse_list = Warehouse.objects.filter(supplier=supplier)
-            non_empty_qty = Quantity.objects.filter(warehouse__in=warehouse_list)
-            if len(list(filter(lambda item: item.quantity > 0, non_empty_qty))) > 0:
-                queryset['stock'].extend(non_empty_qty)
-                queryset['suppliers'].append(supplier)
-        return queryset
+        return my_get_queryset()
+
+
+def my_get_queryset():
+    queryset = Warehouse.objects.filter(quantity__quantity__gt=0).annotate(max_quantity=Max('quantity__quantity')).select_related('supplier')
+    print(queryset)
+    return queryset
+
+
 
 
 

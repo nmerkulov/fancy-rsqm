@@ -25,9 +25,19 @@ class StockTableTestCase(TestCase):
     def test_supplier_empty(self):
         c = Client()
         response = c.get('/quantity/stock/')
-        self.assertTrue(self.suppliers_list[1] in response.context['object_list']['suppliers'])
+        supplier_flag = False
+        for item in response.context['object_list']:
+            if item.supplier == self.suppliers_list[1]:
+                supplier_flag = True
+                break
+        self.assertTrue(supplier_flag)
 
     def test_supplier_non_empty(self):
         c = Client()
         response = c.get('/quantity/stock/')
-        self.assertFalse(self.suppliers_list[0] in response.context['object_list']['suppliers'])
+        supplier_flag = False
+        for item in response.context['object_list']:
+            if item.supplier == self.suppliers_list[0]:
+                supplier_flag = True
+                break
+        self.assertFalse(supplier_flag)

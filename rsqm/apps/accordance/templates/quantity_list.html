@@ -4,16 +4,14 @@
     <table border="1" style="border-collapse: collapse">
         <caption>Warehouse stock</caption>
         <tr>
+            <th>Supplier</th>
             <th>Warehouse</th>
-            <th>Product Code</th>
-            <th>Quantity</th>
-            <th>Date</th>
+            <th>date</th>
         </tr>
-        {% for item in object_list.stock %}
+        {% for item in object_list %}
             <tr>
-                <td>{{item.warehouse}}</td>
-                <td>{{item.product}}</td>
-                <td>{{item.quantity}}</td>
+                <td>{{item.supplier}}</td>
+                <td>{{item.name}}</td>
                 <td>{{item.date}}</td>
             </tr>
         {% endfor %}
