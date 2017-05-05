@@ -51,6 +51,8 @@ def upload_matches(request, s_id):
 def add_supplier_card(request):
     if request.method == 'POST':
         supplier_form = SupplierForm(request.POST)
+        # supplier_instance = supplier_form.save(commit=False)
+        email_formset = EmailFormSet(prefix='emails')
         if supplier_form.is_valid():
             supplier_instance = supplier_form.save()
             email_formset = EmailFormSet(request.POST or None,
@@ -64,7 +66,7 @@ def add_supplier_card(request):
         email_formset = EmailFormSet(prefix='emails')
     return render(request, 'management_supplier.html', {
         'supplier_form': supplier_form,
-        'email_formset': email_formset, })
+        'email_formset': email_formset})
 
 
 def edit_supplier_card(request, s_id):
