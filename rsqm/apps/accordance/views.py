@@ -55,14 +55,10 @@ def upload_quantity(request, supplier_id):
         qty_to_save = []
         for rownum in range(sheet.nrows):
             row.append(sheet.row_values(rownum))
-        print(len(row))
         for item in row:
-            print('in row', len(row))
             try:
-                print('wareh')
                 wareh = Warehouse.objects.get(pk=int(warehouse_id))
                 try:
-                    print(item[0])
                     prod = Product.objects.get(code=int(item[0]))
                     try:
                         qty = Quantity.objects.get(warehouse=wareh, product=prod)
@@ -77,13 +73,11 @@ def upload_quantity(request, supplier_id):
             except ObjectDoesNotExist:
                 error_file_flag = False
                 message.append('unknown warehouse, check your input doc')
-        print(error_file_flag)
         if error_file_flag:
             for item in qty_to_save:
                 item.save()
             message.append('welldone')
         message = ' '.join(message)
-        print(message)
         return HttpResponse(message)
 
 
@@ -97,7 +91,6 @@ class StockTable(ListView):
 
 def my_get_queryset():
     queryset = Warehouse.objects.filter(quantity__quantity__gt=0).annotate(max_quantity=Max('quantity__quantity')).select_related('supplier')
-    print(queryset)
     return queryset
 
 
