@@ -1,7 +1,15 @@
-
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% load bootstrap3 %}
+{% bootstrap_css %}
+<div class="mx-auto" style="width: 500px; margin: auto">
     <h2>Quantity Table</h2>
-    <table border="1" style="border-collapse: collapse">
+    <table border="1" style="border-collapse: collapse" class="table-responsive table-striped table">
         <caption>Warehouse stock</caption>
         <tr>
             <th>Supplier</th>
@@ -9,11 +17,13 @@
             <th>date</th>
         </tr>
         {% for item in object_list %}
-            <tr>
-                <td>{{item.supplier}}</td>
-                <td>{{item.name}}</td>
-                <td>{{item.date}}</td>
-            </tr>
+        <tr>
+            <td>{{item.supplier}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.date}}</td>
+        </tr>
         {% endfor %}
     </table>
-{% endblock %}
+</div>
+</body>
+</html>
