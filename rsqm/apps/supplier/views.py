@@ -24,24 +24,21 @@ def upload_matches(request, s_id):
             upload_xls = request.FILES['matches']
             workbook = xlrd.open_workbook(file_contents=upload_xls.read())
             sheet = workbook.sheet_by_index(0)
-            count = 0
+            count_success = 0
+            count_failed = 0
             for rownum in range(sheet.nrows):
                 row = sheet.row_values(rownum)
-                product = Product.objects.create(code=int(row[0]))
-                product.save()
-                
-                product = get_object_or_404(Product, code=int(row[0]))
                 try:
-                    match = Match.objects.get(supplier_code=int(row[1]),
-                                              supplier_id=s_id)
-
+                    product = Product.objects.get(code=int(row[0]))
+                    match = Match.objects.get_or_create(
+                                              supplier_code=int(row[1]),
+                                              supplier_id=s_id,
+                                              product_id=product.id)
+                    count_success += 1
                 except ObjectDoesNotExist:
-                    match = Match.objects.create(supplier_code=int(row[1]),
-                                                 supplier_id=s_id,
-                                                 product_id=product.id)
-                    match.save()
-                    count += 1
-            return HttpResponse('Successful added {}'.format(count))
+                    count_failed += 1
+            msg = 'Successful recognized {}, Not recognized {}'
+            return HttpResponse(msg.format(count_success, count_failed))
     else:
         upload_form = MatchesUploadForm()
     return render(request, 'upload.html', {'upload_form': upload_form})
