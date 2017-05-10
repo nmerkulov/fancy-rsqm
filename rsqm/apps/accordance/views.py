@@ -64,14 +64,7 @@ def upload_quantity(request, supplier_id):
 class StockTable(ListView):
     context_object_name = 'object_list'
     template_name = 'quantity_list.html'
-
-    def get_queryset(self):
-        return my_get_queryset()
-
-
-def my_get_queryset():
-    queryset = Warehouse.objects.filter(quantity__quantity__gt=0).annotate(sum_quantity=Sum('quantity__quantity')).select_related('supplier')
-    return queryset
+    queryset = queryset = Warehouse.objects.filter(quantity__quantity__gt=0).annotate(sum_quantity=Sum('quantity__quantity')).select_related('supplier')
 
 
 

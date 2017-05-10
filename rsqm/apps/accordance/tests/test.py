@@ -27,7 +27,6 @@ class StockTableTestCase(TestCase):
         response = c.get('/quantity/stock/')
         supplier_flag = False
         for item in response.context['object_list']:
-            print(item.supplier, 'test1')
             if item.supplier == self.suppliers_list['empty']:
                 supplier_flag = True
                 break
@@ -38,7 +37,6 @@ class StockTableTestCase(TestCase):
         response = c.get('/quantity/stock/')
         supplier_flag = False
         for item in response.context['object_list']:
-            print(item.supplier, 'test2')
             if item.supplier == self.suppliers_list['nonempty']:
                 supplier_flag = True
                 break

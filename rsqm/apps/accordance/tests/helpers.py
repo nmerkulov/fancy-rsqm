@@ -31,7 +31,7 @@ def initdb_stocktable_test_case(size=3):
     def create_nonempty_supplier():
         product = Product(code=1000)
         product.save()
-        tmpsupplier = Supplier(name='nonempty supplier ', column_remain=0, column_code=0)
+        tmpsupplier = Supplier(name='nonempty supplier', column_remain=0, column_code=0)
         tmpsupplier.save()
         suppliers_list['nonempty'] = tmpsupplier
         tmpemail = Email(supplier=tmpsupplier, email='s@s.ru')
@@ -44,7 +44,7 @@ def initdb_stocktable_test_case(size=3):
     def create_empty_supplier():
         product = Product(code=1001)
         product.save()
-        tmpsupplier = Supplier(name='empty supplier ', column_remain=1, column_code=1)
+        tmpsupplier = Supplier(name='empty supplier', column_remain=1, column_code=1)
         tmpsupplier.save()
         suppliers_list['empty'] = tmpsupplier
         tmpemail = Email(supplier=tmpsupplier, email='s@k.ru')
