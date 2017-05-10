@@ -1,9 +1,8 @@
 from django.test import TestCase, Client
+from apps.supplier.models import Supplier
 
 
 class ValidateSupplierCard(TestCase):
-    # def setUp(self):
-        # pass
 
     def test_validate_columns_equal(self):
         c = Client()
@@ -13,11 +12,13 @@ class ValidateSupplierCard(TestCase):
                           'column_code': 1})
         self.assertEqual(response.status_code, 200)
 
+    def test_not_create_supplier(self):
+        c = Client()
+        c.post('/supplier/add/',
+                         {'name': 'testname',
+                          'column_remain': 1,
+                          'column_code': 1})
+        self.assertFalse(Supplier.objects.filter(name='testname',
+                                                 column_remain=1,
+                                                 column_code=1).exists())
 
-    # def test_validate_columns_not_equal(self):
-    #     c = Client()
-    #     response = c.post('/supplier/add/',
-    #                      {'name': 'bbb',
-    #                       'column_remain': 1,
-    #                       'column_code': 2})
-    #     self.assertEqual(response.status_code, 302)
