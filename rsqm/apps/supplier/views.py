@@ -16,8 +16,6 @@ class SupplierListView(ListView):
 class SupplierDetailView(DetailView):
     model = Supplier
 
-    # def req_path(request):
-        # return request.path
 
 def upload_matches(request, s_id):
     if request.method == 'POST':
@@ -29,8 +27,9 @@ def upload_matches(request, s_id):
             count = 0
             for rownum in range(sheet.nrows):
                 row = sheet.row_values(rownum)
-                # product = Product.objects.create(code=int(row[0]))
-                # product.save()
+                product = Product.objects.create(code=int(row[0]))
+                product.save()
+                
                 product = get_object_or_404(Product, code=int(row[0]))
                 try:
                     match = Match.objects.get(supplier_code=int(row[1]),
