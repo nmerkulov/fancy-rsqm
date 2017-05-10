@@ -3,6 +3,7 @@ from django.forms import ModelForm, inlineformset_factory, forms
 from django.core.exceptions import ValidationError
 
 
+
 class SupplierForm(ModelForm):
     class Meta:
         model = Supplier
@@ -21,3 +22,7 @@ EmailFormSet = inlineformset_factory(Supplier,
                                      fields=('email',),
                                      extra=2
                                      )
+
+
+class MatchesUploadForm(forms.Form):
+    matches = forms.FileField(label='Upload matches file:')
