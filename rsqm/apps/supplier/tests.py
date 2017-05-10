@@ -11,13 +11,6 @@ class ValidateSupplierCard(TestCase):
                           'column_remain': 1,
                           'column_code': 1})
         self.assertEqual(response.status_code, 200)
-
-    def test_not_create_supplier(self):
-        c = Client()
-        c.post('/supplier/add/',
-                         {'name': 'testname',
-                          'column_remain': 1,
-                          'column_code': 1})
         self.assertFalse(Supplier.objects.filter(name='testname',
                                                  column_remain=1,
                                                  column_code=1).exists())
