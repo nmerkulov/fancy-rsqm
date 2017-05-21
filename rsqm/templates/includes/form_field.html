@@ -1,5 +1,5 @@
 <div class='supplierField'>
         {{ field.errors }}
         <label for="{{ field.id_name }}">{{field.label}}:</label>
-        {{ field }}
+        <input value="{{ field.value|default_if_none:"" }}" name="{{ field.name }}">
     </div>

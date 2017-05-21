@@ -8,4 +8,5 @@
     <p>Column with code: {{ supplier.column_code }}</p>
     <a href="{% url 'edit_card' supplier.id %}">Edit</a>
     <a href="{% url 'delete_card' supplier.id %}">Delete</a>
+    <a href="{% url 'upload' supplier.id %}">Upload matches</a>
 {% endblock %}
