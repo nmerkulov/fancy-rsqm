@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from apps.supplier.views import (edit_supplier_card,
+from .views import (edit_supplier_card,
                                  SupplierListView,
                                  SupplierDetailView,
                                  add_supplier_card,

@@ -1,0 +1,19 @@
+
+{% block content %}
+    <h2>Quantity Table</h2>
+    <table border="1" style="border-collapse: collapse">
+        <caption>Warehouse stock</caption>
+        <tr>
+            <th>Supplier</th>
+            <th>Warehouse</th>
+            <th>date</th>
+        </tr>
+        {% for item in object_list %}
+            <tr>
+                <td>{{item.supplier}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.date}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

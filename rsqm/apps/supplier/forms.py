@@ -1,3 +1,5 @@
+from .models import Email, Supplier
+from django.forms import ModelForm, inlineformset_factory
 from apps.supplier.models import Email, Supplier
 from django.forms import ModelForm, inlineformset_factory, forms
 from django.core.exceptions import ValidationError

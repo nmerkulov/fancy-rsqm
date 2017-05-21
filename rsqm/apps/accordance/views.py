@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .models import Quantity, Product
 from ..supplier.models import Warehouse, Supplier, Email
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.generic import ListView
+from django.db.models import Sum
 import xlrd
 import xlwt
 
@@ -22,7 +24,6 @@ def upload_quantity(request, supplier_id):
         }
         return render(request, 'upload_quantity.html', context)
 
-
     elif request.method == 'POST':
         input_excel = request.FILES['quantity']
         book = xlrd.open_workbook(file_contents=input_excel.read())
@@ -34,14 +35,10 @@ def upload_quantity(request, supplier_id):
         qty_to_save = []
         for rownum in range(sheet.nrows):
             row.append(sheet.row_values(rownum))
-        print(len(row))
         for item in row:
-            print('in row', len(row))
             try:
-                print('wareh')
                 wareh = Warehouse.objects.get(pk=int(warehouse_id))
                 try:
-                    print(item[0])
                     prod = Product.objects.get(code=int(item[0]))
                     try:
                         qty = Quantity.objects.get(warehouse=wareh, product=prod)
@@ -56,14 +53,21 @@ def upload_quantity(request, supplier_id):
             except ObjectDoesNotExist:
                 error_file_flag = False
                 message.append('unknown warehouse, check your input doc')
-        print(error_file_flag)
         if error_file_flag:
             for item in qty_to_save:
                 item.save()
             message.append('welldone')
         message = ' '.join(message)
-        print(message)
         return HttpResponse(message)
+
+
+class StockTable(ListView):
+    context_object_name = 'object_list'
+    template_name = 'quantity_list.html'
+    queryset = Warehouse.objects.filter(quantity__quantity__gt=0).annotate(sum_quantity=Sum('quantity__quantity')).select_related('supplier')
+
+
+
 
 
 

@@ -20,15 +20,17 @@ class Match(models.Model):
 
 class Quantity(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(Warehouse,related_name='quantity', on_delete=models.CASCADE)
     quantity = models.IntegerField()
+    date = models.DateField(auto_now=True, auto_now_add=False)
+
 
     class Meta:
         unique_together = ('product', 'warehouse')
 
 
     def __str__(self):
-        return self.name
+        return str(self.product)
 
 
 
