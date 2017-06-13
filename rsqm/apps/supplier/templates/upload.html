@@ -6,6 +6,10 @@
 </head>
 <body>
 <a style="color: red"> {{ alert }}</a>
+<!-- {% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %} -->
 <form enctype="multipart/form-data" method="post" action="">
     {% csrf_token %}
     {{ upload_form.non_field_errors }}

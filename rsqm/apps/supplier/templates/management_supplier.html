@@ -17,13 +17,13 @@
         {% endfor %}
         <div class='emailField'>
             {{ form.email.errors }}
-        <label for="{{ form.email.id_email">Email:</label>
+        <label for="{{ form.email.name }}">{{ form.email.label }}:</label>
             {{ form.email }}
             {{ form.id }}
         </div>
             {% if email_formset.can_delete %}
                 <div class="deleteField">
-                <label for="{{ form.DELETE.id_DELETE">Delete email:</label>
+                <label for="{{ form.DELETE.id_DELETE }}">Delete email:</label>
                     {{ form.DELETE }}
                 </div>
             {% endif %}
