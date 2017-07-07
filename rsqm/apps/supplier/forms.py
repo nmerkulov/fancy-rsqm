@@ -27,4 +27,5 @@ EmailFormSet = inlineformset_factory(Supplier,
 
 
 class MatchesUploadForm(forms.Form):
-    matches = forms.FileField(label='Upload matches file:')
+    matches = forms.FileField(label='Upload matches file:', 
+                              error_messages={'required':'First, you should choose file'}  )

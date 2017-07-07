@@ -1,12 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ supplier.name }} card{% endblock %}
+{% block sidemenu %}
+    <li><a href="{% url 'edit_card' supplier.id %}">Edit supplier</a></li>
+    <li><a href="{% url 'upload_match' supplier.id %}">Upload matches</a></li>
+    <li><a href="{% url 'upload_quant' supplier.id %}">Upload quantity</a></li>   
+    <li><a href="{% url 'delete_card' supplier.id %}" onclick='return confirm("Are you sure you want to delete {{ supplier.name }} card?")''>Delete supplier</a></li>
+{% endblock %}
+
 {% block content %}
-    <p>Supplier: {{ supplier.name }}</p>
-    <p>E-mail(s):</p>
-    {% for email in supplier.email_set.all %}
-        <p>{{ email.email }}</p>
-    {% endfor %}
-    <p>Column with remain: {{ supplier.column_remain }}</p>
-    <p>Column with code: {{ supplier.column_code }}</p>
-    <a href="{% url 'edit_card' supplier.id %}">Edit</a>
-    <a href="{% url 'delete_card' supplier.id %}">Delete</a>
-    <a href="{% url 'upload' supplier.id %}">Upload matches</a>
+    <div class="detail-info">
+        <div class="headInfo">Contact info</div>
+        <p>Name: {{ supplier.name }}</p>
+        <p>E-mail(s):</p>
+        {% for email in supplier.email_set.all %}
+            <p>{{ email.email }}</p>
+        {% endfor %}
+        <div class="headInfo">Warehouses</div>
+        {% for warehouse in supplier.warehouse_set.all %}
+            <p>{{ warehouse.name }}, {{ warehouse.city }}</p>
+        {% endfor %}
+        <div class="headInfo">Number of column</div>
+        <p>Column with remain: {{ supplier.column_remain }}</p>
+        <p>Column with code: {{ supplier.column_code }}</p>
+    </div>
 {% endblock %}

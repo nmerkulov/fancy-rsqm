@@ -37,8 +37,9 @@ def upload_matches(request, s_id):
                     count_success += 1
                 except ObjectDoesNotExist:
                     count_failed += 1
-            msg = 'Successful recognized {}, Not recognized {}'
-            return HttpResponse(msg.format(count_success, count_failed))
+            msg = 'Successful recognized {}, Not recognized {}'.format(count_success, count_failed)
+            return render(request, 'upload.html', {'upload_form': upload_form,
+                                                   'msg':msg})
     else:
         upload_form = MatchesUploadForm()
     return render(request, 'upload.html', {'upload_form': upload_form})

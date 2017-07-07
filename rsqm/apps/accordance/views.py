@@ -16,9 +16,9 @@ def supplier_list(request):
     return render(request, 'supplier_list.html', context)
 
 
-def upload_quantity(request, supplier_id):
+def upload_quantity(request, s_id):
     if request.method == 'GET':
-        supplier = get_object_or_404(Supplier, pk=supplier_id)
+        supplier = get_object_or_404(Supplier, pk=s_id)
         context = {
             'object_list': Warehouse.objects.filter(supplier=supplier)
         }
@@ -58,7 +58,12 @@ def upload_quantity(request, supplier_id):
                 item.save()
             message.append('welldone')
         message = ' '.join(message)
-        return HttpResponse(message)
+        supplier = get_object_or_404(Supplier, pk=s_id)
+        context = {
+            'object_list': Warehouse.objects.filter(supplier=supplier),
+            'message': message
+        }
+        return render(request, 'upload_quantity.html', context)
 
 
 class StockTable(ListView):

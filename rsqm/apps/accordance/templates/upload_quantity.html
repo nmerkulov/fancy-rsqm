@@ -1,22 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form enctype="multipart/form-data" method="post">
+{% extends "base.html" %}
+{% block title %}Upload quantity{% endblock %}
+{% block sidemenu %}
+    <li>1.Choose warehouse</li>
+    <li>2.Upload .xls file with quantity info</li>
+{% endblock %}
+
+{% block content %}
+<form name="upload-quant" enctype="multipart/form-data" method="post">
     {% csrf_token %}
-    <label for="warehouse_list">Choose Warehouse</label>
+    <p>{{ message }}</p>
+    <label for="warehouse_list"><p>Choose Warehouse:</p></label>
     <select id="warehouse_list" name="warehouse" required>
         {% for object in object_list %}
         <option value="{{ object.id }}">{{object.name}}</option>
         {% endfor %}
     </select>
-    <p>Load your quantity file</p>
-
-   <p><input type="file" name="quantity" accept="application/excel">
-   <input type="submit" value="Send"></p>
+    <p>Upload your quantity file:</p>
+    <div class="file-upload">
+            <label>
+               <input type="file" onchange="getFileName ()" name="quantity" accept="application/excel" id="id_quantity"  required>
+               <div class="choose">Choose file</div>
+            </label>
+        </div>
+        <div id='file-name'></div>
+        <script type="text/javascript">
+            function getFileName ()  {
+                var file = document.getElementById('id_quantity').value;
+                file = file.replace (/\\/g, "/").split('/').pop();
+                document.getElementById('file-name').innerHTML ='File name: ' + file;
+            }
+        </script>
+   <input type="submit" value="upload"></p>
 </form>
-</body>
-</html>
+{% endblock %}
