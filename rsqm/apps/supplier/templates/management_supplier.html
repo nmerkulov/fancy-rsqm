@@ -1,35 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Supplier management</title>
-</head>
-<body>
-  <form method="post" action="">
+{% extends "base.html" %}
+{% block title %}Supplier management{% endblock %}
+{% block sidemenu %}
+    <li>If you want to delete e-mail from database - use checkbox</li>
+    <li>Column remain and column code must be different</li>
+{% endblock %}
+{% block content %}
+  <form class="supplierManage" name="supplierManage" method="post" action="">
     {% csrf_token %}
     {{ supplier_form.non_field_errors }}
     {% include 'includes/form_field.html' with field=supplier_form.name %}
     {% include 'includes/form_field.html' with field=supplier_form.column_remain %}
     {% include 'includes/form_field.html' with field=supplier_form.column_code %}
     {{ email_formset.management_form }}
+    <label>Emails:</label><br>
     {% for form in email_formset %}
         {% for hidden in form.hidden_fields %}
             {{ hidden }}
         {% endfor %}
         <div class='emailField'>
             {{ form.email.errors }}
-        <label for="{{ form.email.id_email">Email:</label>
             {{ form.email }}
             {{ form.id }}
-        </div>
             {% if email_formset.can_delete %}
                 <div class="deleteField">
-                <label for="{{ form.DELETE.id_DELETE">Delete email:</label>
+                <label for="{{ form.DELETE.id_DELETE }}">Delete email</label>
                     {{ form.DELETE }}
-                </div>
+                </div><br>
             {% endif %}
+        </div>
+            
     {% endfor %}
-    <input type="submit" value="Save"/>
+    <br>
+    <button class="btn" type="submit">Save</button>
   </form>
-
-</body>
-</html>
+{% endblock %}

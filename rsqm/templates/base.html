@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+      {% block title %}{% endblock %}
+    </title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+  <div id="wrapper">
+        <div id="header">
+            <nav>
+              <ul class="top-menu">
+                  <li><a href="{% url 'sup_list' %}">Supplier list</a></li>
+                  <li><a href="{% url 'quan_list' %}">Quantity</a></li>
+                  <li><a href="#">Menu3</a></li>
+                  <li><a href="#">Menu4</a></li>
+              </ul>
+            </nav>  
+        </div>
+
+        <div id="sidebar">
+          <nav>
+              <ul class="side-menu">
+                {% block sidemenu %}{% endblock %}
+              </ul>
+          </nav>
+    
+        </div>
+
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+
+  </div>
+</body>
+</html>

@@ -1,22 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<a style="color: red"> {{ alert }}</a>
-<form enctype="multipart/form-data" method="post" action="">
-    {% csrf_token %}
-    {{ upload_form.non_field_errors }}
-    <div class="uploadFormMatches">
-    <p>{{ upload_form.matches.label_tag}}</p>
-    <p>
+{% extends "base.html" %}
+{% block title %}Upload matches{% endblock %}
+{% block sidemenu %}
+    <li>You should upload .xls file with two columns</li>
+    <li>Columns should consider matches of product code</li>
+{% endblock %}
+
+{% block content %}
+    <a style="color: red"> {{ alert }}</a>
+    <form name="match-upload" enctype="multipart/form-data" method="post" action="" novalidate> 
+        {% csrf_token %} 
+        {{ upload_form.non_field_errors }}
+        <p> {{ msg }}</p>
+        <p>{{ upload_form.matches.label_tag}}</p>
+        <div class="file-upload">
+            <label>
+               <input type="file" name="matches" id="id_matches" onchange="getFileName ()" required"> 
+               <div class="choose">Choose file</div>
+            </label>
+        </div>
+        <div id='file-name'></div>
+        <script type="text/javascript">
+            function getFileName ()  {
+                var file = document.getElementById('id_matches').value;
+                file = file.replace (/\\/g, "/").split('/').pop();
+                document.getElementById('file-name').innerHTML ='File name: ' + file;
+            }
+        </script>
         {{  upload_form.matches.errors }}
-        {{  upload_form.matches }}
-    </p>
-    </div>
-   <input type="submit" value="upload"></p>
-</form>
-</body>
-</html>
+       <input type="submit" value="upload"></p>
+    </form> 
+{% endblock %}

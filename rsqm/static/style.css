@@ -1,0 +1,338 @@
+nav a {
+    text-decoration: none;
+}
+
+nav ul{
+    margin: 0;
+    padding: 0;
+}
+
+nav li{
+    list-style-position: inside;
+    font: 23px 'Oswald', sans-serif;
+    padding: 10px;   
+}
+
+.top-menu li{
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 0;
+    text-align: center;
+    float: left;
+    border-left: 1px solid #E0FFFF;
+    width:120px;
+}
+
+.top-menu a{
+    color: #E0FFFF;
+}
+.top-menu a:hover{
+    color: #FFFFFF;
+}
+
+.top-menu li:first-child{
+    border: none;
+}
+
+body{
+    background-color: #f8f8f8;
+    color: #000;
+    margin: 1;
+}
+
+#wrapper{
+    margin: auto auto;
+    text-align: center;
+    width: 75%;
+    height: 400px;
+    border-radius: 10px;   
+}
+#header{
+    width: 100%;
+    height: 55px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    background: #708090;
+}
+
+#sidebar{
+    float: left;
+    width: 20%;
+    height: auto;
+    border-radius: 10px;
+    background: #708090;
+}
+#content{
+    float: right;
+    width: 75%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.side-menu li{
+    font-weight: 300;
+    list-style-type: none;
+    border-top: 1px solid #e7e7e7;
+    font: 15px 'Oswald', sans-serif;
+    color: #E0FFFF;
+}
+.side-menu li:first-child{
+    border: none;
+}
+.side-menu a{
+    color: #E0FFFF;
+}
+.side-menu a:hover{
+    color: #FFFFFF;
+}
+
+.tab-list{
+    width:100%;
+    border: 3px solid #D3D3D3;
+    border-radius: 10px;
+    border-collapse: collapse;
+}
+.tab-list tr{
+    border: 1px solid #D3D3D3;
+}
+.tab-list td, th{
+    padding: 10px;
+    background-color: white;
+}
+.tab-list th{
+    border-bottom: 2px solid #696969;
+    background: #D3D3D3;
+    font: 19px 'Oswald', sans-serif;
+    color: #696969;
+}
+.tab-list td{
+    font: 17px 'Oswald', sans-serif;
+    color:#696969;
+}
+
+.tab-list a{
+    font: 17px 'Oswald', sans-serif;
+    font-weight: 300;
+    text-decoration: none;
+    color: #808080;
+}
+
+.tab-list a:hover{
+    color: #191970;
+    }
+
+.search-supplier{
+    float: right;
+    position: relative;
+    white-space: nowrap;
+    width:100%;
+    margin-left: none;
+}
+
+input[type="text"]{
+    background-color: white;
+    border: 1px solid #A9A9A9;
+    border-radius: 10px;
+    color: #808080;
+    padding: 0 45px;
+    margin-bottom: 10px;
+    vertical-align: top;
+    height: 45px;
+    width: 550px;
+    font: 17px 'Oswald', sans-serif;
+
+}
+input[type="text"]::-webkit-input-placeholder{
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+input[type="text"]:focus::-webkit-input-placeholder{
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+}
+.icon-search{
+    position: absolute;
+    top: 27%;
+    margin-left: 10px;
+    width: 20px;
+    z-index: 1;
+    color: #808080;
+}
+
+.headInfo{
+    border-bottom: 2px solid #696969;
+    background: #D3D3D3;
+    font: 19px 'Oswald', sans-serif;
+    color: #696969;
+    width: 100%;
+    height: 30px;
+    text-align: left;
+}
+
+.detail-info p{
+    font: 17px 'Oswald', sans-serif;
+    color: #696969;
+}
+
+.supplierManage input[type="text"]{
+    background-color: white;
+    border: 1px solid #A9A9A9;
+    border-radius: 10px;
+    color: #696969;
+    height: 35px;
+    width: 250px;
+    font: 17px 'Oswald', sans-serif;
+    float: center;
+}
+
+.supplierManage label{
+    font: 19px 'Oswald', sans-serif;
+    color: #808080;
+    
+}
+.deleteField label, input[type="checkbox"]{
+    font: 15px 'Oswald', sans-serif;
+    color: red;
+    opacity:0.5;
+    display: inline-block;
+    float: right;
+
+}
+.deleteField, .emailField{
+    display: inline-block;
+}
+.deleteField  input[type="checkbox"]{
+    width:20px;
+    height: 20px;
+    border: 2px solid;
+    border-radius:2px;
+}
+.supplierManage input[type="submit"]{
+    float:right;
+    width:150px;
+    height:40px;
+    font: 15px 'Oswald', sans-serif;
+}
+
+.supplierManage button, input[value="upload"]{
+    margin-top:20px;
+    text-align: center;
+    cursor: pointer;
+    font: 20px 'Oswald', sans-serif;
+    text-decoration: none;
+    padding: 8px 60px;
+    color:#696969;
+    background-color: #DCDCDC;
+    border-radius:15px;
+    border: 2px solid #bababa;
+}
+
+.supplierManage button:hover{
+    background-color: #D3D3D3;
+    border: 2px solid #808080;
+}
+.supplierManage button:active{
+    background-color: #808080;
+    border: 2px solid #696969;
+}
+input[value="upload"]:hover{
+    background-color: #D3D3D3;
+    border: 2px solid #808080;
+}
+input[value="upload"]:active{
+    background-color: #808080;
+    border: 2px solid #696969;
+}
+.errorlist{
+    margin-right: 40px;
+}
+.errorlist li{
+    color: red;
+    font: 12px 'Oswald', sans-serif;
+    float:center;
+    list-style-type: none;
+}
+.nonfield li{
+    font: 17px 'Oswald', sans-serif;
+}
+
+.file-upload input{
+    display: none;
+}
+
+.choose{
+    position: relative;
+    font: 20px 'Oswald', sans-serif;
+    color:#696969;
+    top: 20%;
+}
+
+.file-upload{
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    text-decoration: none;
+    background-color: #DCDCDC;
+    border-radius:15px;
+    border: 2px solid #bababa;
+    width: 250px;
+    height: 40px;
+    margin-left: 206px;
+}
+
+.file-upload label{
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.file-upload:hover{
+    background-color: #D3D3D3;
+    border: 2px solid #808080;
+}
+.file-upload:active{
+    background-color: #808080;
+    border: 2px solid #696969;
+}
+.file-name{
+    font:15px 'Oswald', sans-serif;
+    color:#696969;;
+}
+form[name="match-upload"] p{
+    font:17px 'Oswald', sans-serif; 
+    color:#696969;
+}
+form[name="upload-quant"] p{
+    font:17px 'Oswald', sans-serif; 
+    color:#696969;
+}
+select{
+    font:17px 'Oswald', sans-serif;
+    color:#696969;
+    background-color: white;
+    border: 1px solid #A9A9A9;
+    border-radius: 10px;
+    height: 35px;
+    width: 250px;
+    font: 17px 'Oswald', sans-serif;
+
+}
+
+select:hover{
+    color: black;
+    border: 2px solid #A9A9A9;
+}
+
+option:hover{
+    background-color: #778899;
+}
+
+caption{
+    font: 22px 'Oswald', sans-serif;
+    color:#696969;
+    margin-bottom: 15px;
+}

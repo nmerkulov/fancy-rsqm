@@ -1,9 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Supplier list{% endblock %}
+{% block sidemenu %}
+    <li><a href="{% url 'add_card' %}">Add new supplier card</a></li>
+{% endblock %}
 {% block content %}
-    <a href="{% url 'add_card' %}"><h4>Add new supplier card</h4></a>
-    <hr>
-    {% for supplier in supplier_list %}
-        <p><a href="{{ supplier.get_absolute_url }}">{{ supplier.name }}</a></p>
-    {% empty %}
-    <p>No suppliers</p>
-    {% endfor %}
+    <form name="search-supplier" class="search-supplier">
+      <span class="icon-search"><i class="fa fa-search"></i></span>
+      <input type="text" name="s-s" placeholder="Type supplier name here...">    
+    </form>
+    <table class="tab-list">
+      <tr class="table-head">
+          <th>Supplier</th>
+          <th>Someth</th>
+          <th>Someth</th>
+      </tr>
+        {% for supplier in supplier_list %}
+            <tr>
+                <td>
+                <a href="{{ supplier.get_absolute_url }}">{{ supplier.name }}</a>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        {% empty %}
+            <p>No suppliers</p>
+        {% endfor %}
+    </table>    
+       
 {% endblock %}
