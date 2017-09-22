@@ -33,7 +33,3 @@ class Quantity(models.Model):
         return str(self.product)
 
 
-
-
-
-

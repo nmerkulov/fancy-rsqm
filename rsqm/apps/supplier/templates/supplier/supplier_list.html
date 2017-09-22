@@ -6,7 +6,8 @@
 {% block content %}
     <form name="search-supplier" class="search-supplier">
       <span class="icon-search"><i class="fa fa-search"></i></span>
-      <input type="text" name="s-s" placeholder="Type supplier name here...">    
+      {% csrf_token %}
+      <input type="text" name="s-s">    
     </form>
     <table class="tab-list">
       <tr class="table-head">
@@ -25,6 +26,13 @@
         {% empty %}
             <p>No suppliers</p>
         {% endfor %}
-    </table>    
+    </table>  
+
+    <p>Search</p>
+    {% csrf_token %}
+    <input type="text" id="search_s" name="search">  
+    <ul id="search-results">
+      
+    </ul>
        
 {% endblock %}
