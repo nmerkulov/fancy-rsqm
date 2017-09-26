@@ -7,32 +7,36 @@
     <form name="search-supplier" class="search-supplier">
       <span class="icon-search"><i class="fa fa-search"></i></span>
       {% csrf_token %}
-      <input type="text" name="s-s">    
+      <input type="text" name="s-s" id="search_input">    
     </form>
-    <table class="tab-list">
-      <tr class="table-head">
-          <th>Supplier</th>
-          <th>Someth</th>
-          <th>Someth</th>
-      </tr>
-        {% for supplier in supplier_list %}
-            <tr>
-                <td>
-                <a href="{{ supplier.get_absolute_url }}">{{ supplier.name }}</a>
-                </td>
-                <td></td>
-                <td></td>
-            </tr>
-        {% empty %}
-            <p>No suppliers</p>
-        {% endfor %}
+    <table class="tab-list" id="main-results-search">
+      {% include 'includes/supplier_table.html' with  supplier_query=supplier_list %}
     </table>  
 
-    <p>Search</p>
-    {% csrf_token %}
-    <input type="text" id="search_s" name="search">  
-    <ul id="search-results">
-      
-    </ul>
+    <script>
+        $('#search_input').keyup(function(event){
+        var query = ($("#search_input").val());
+        console.log(query)
+
+        if (query != '' || query !=' '){
+            $.ajax({
+            type: "GET",
+            url: "search/",
+            data: {
+                'q' : query,
+                'csrfmiddlewaretoken' : '{{ csrf_token }}'
+            },
+            success: function(data) {
+                $('#main-results-search').html(data);
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });    
+
+        }
+  
+    });
+    </script>
        
 {% endblock %}

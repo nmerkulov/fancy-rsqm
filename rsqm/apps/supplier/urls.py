@@ -16,5 +16,5 @@ urlpatterns = [
     url(r'^(?P<s_id>\d+)/edit/$', edit_supplier_card, name='edit_card'),
     url(r'^(?P<s_id>\d+)/delete/$', delete_supplier_card, name='delete_card'),
     url(r'^(?P<s_id>\d+)/upload_match/$', upload_matches, name='upload_match'),
-    url(r'^search/$', search_cards)  
-    ]
+    url(r'^search/$', search_cards, name='search'), 
+]

@@ -1,21 +1,23 @@
-$(function(){
+    $('#search_input').keyup(function(event){
+        var query = ($("#search_input").val());
+        console.log(query)
 
-    $('#search_s').keyup(function(){
-
-        $.ajax({
-            type: "POST",
-            url: "/supplier/search/",
+        if (query != '' || query !=' '){
+            $.ajax({
+            type: "GET",
+            url: "search/",
             data: {
-                'search_text' : $('#search_s').val(),
-                'csrfmiddlewaretoken' : $("input[name=csrfmiddlewaretoken]").val()
+                'q' : query,
+                'csrfmiddlewaretoken' : '{{ csrf_token }}'
             },
-            success: searchSuccess,
-            dataType: 'html'
-        });
-    });
-});
+            success: function(data) {
+                $('#main-results-search').html(data);
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });    
 
-function searchSuccess(data, textStatus, jqXHR)
-{
-    $('#search_results').html(data);
-}
+        }
+  
+    });

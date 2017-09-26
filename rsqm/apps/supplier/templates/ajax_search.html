@@ -1,3 +1,3 @@
-{% for supplier in suppliers  %}
-    <li>{{ supplier.name }}</li>
-{% endfor %}
+{% include 'includes/supplier_table.html' with supplier_query=suppliers_search %}
+
+
