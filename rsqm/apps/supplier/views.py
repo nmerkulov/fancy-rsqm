@@ -5,7 +5,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView, DetailView
 from apps.supplier.forms import SupplierForm, EmailFormSet, MatchesUploadForm
 from django.http import HttpResponse, HttpResponseRedirect
-from django.db.models import Q
 import xlrd
 
 
@@ -94,14 +93,13 @@ def delete_supplier_card(request, s_id):
 def search_cards(request):
     query = request.GET.get('q')
     if query and query != '' and request.is_ajax():
-        suppliers_search = Supplier.objects.filter(
-            Q(name__startswith=query)
-        )
+        suppliers = Supplier.objects.filter(
+            name__startswith=query)
         return render(request, 'ajax_search.html',
-                               {'suppliers_search': suppliers_search})
+                               {'suppliers': suppliers})
     elif query == '' and request.is_ajax():
-        suppliers_search = Supplier.objects.all()
+        suppliers = Supplier.objects.all()
         return render(request, 'ajax_search.html',
-                               {'suppliers_search': suppliers_search})
+                               {'suppliers': suppliers})
 
     return(render, 'ajax_search.html')

@@ -1,5 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-
     $('#search_input').keyup(function(event){
         var query = ($("#search_input").val());
         console.log(query)
@@ -7,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (query != '' || query !=' '){
             $.ajax({
             type: "GET",
-            url: "search",
+            url: "search/",
             data: {
                 'q' : query,
                 'csrfmiddlewaretoken' : '{{ csrf_token }}'
@@ -23,4 +21,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
   
     });
-});

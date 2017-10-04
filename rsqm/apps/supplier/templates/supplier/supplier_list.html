@@ -12,31 +12,6 @@
     <table class="tab-list" id="main-results-search">
       {% include 'includes/supplier_table.html' with  supplier_query=supplier_list %}
     </table>  
-
-    <script>
-        $('#search_input').keyup(function(event){
-        var query = ($("#search_input").val());
-        console.log(query)
-
-        if (query != '' || query !=' '){
-            $.ajax({
-            type: "GET",
-            url: "search/",
-            data: {
-                'q' : query,
-                'csrfmiddlewaretoken' : '{{ csrf_token }}'
-            },
-            success: function(data) {
-                $('#main-results-search').html(data);
-            },
-            error: function(data){
-                console.log(data);
-            }
-        });    
-
-        }
-  
-    });
-    </script>
-       
+    {% load static %}
+      <script src="{% static 'ajax.js' %}"></script>
 {% endblock %}
