@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from apps.supplier.models import Supplier
 from apps.accordance.models import Product, Match
 from django.core.exceptions import ObjectDoesNotExist
@@ -88,3 +88,18 @@ def delete_supplier_card(request, s_id):
     instance = get_object_or_404(Supplier, id=s_id)
     instance.delete()
     return redirect('sup_list')
+
+
+def search_cards(request):
+    query = request.GET.get('q')
+    if query and query != '' and request.is_ajax():
+        suppliers = Supplier.objects.filter(
+            name__startswith=query)
+        return render(request, 'ajax_search.html',
+                               {'suppliers': suppliers})
+    elif query == '' and request.is_ajax():
+        suppliers = Supplier.objects.all()
+        return render(request, 'ajax_search.html',
+                               {'suppliers': suppliers})
+
+    return(render, 'ajax_search.html')

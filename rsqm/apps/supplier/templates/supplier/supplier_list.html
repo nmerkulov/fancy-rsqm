@@ -6,25 +6,12 @@
 {% block content %}
     <form name="search-supplier" class="search-supplier">
       <span class="icon-search"><i class="fa fa-search"></i></span>
-      <input type="text" name="s-s" placeholder="Type supplier name here...">    
+      {% csrf_token %}
+      <input type="text" name="s-s" id="search_input">    
     </form>
-    <table class="tab-list">
-      <tr class="table-head">
-          <th>Supplier</th>
-          <th>Someth</th>
-          <th>Someth</th>
-      </tr>
-        {% for supplier in supplier_list %}
-            <tr>
-                <td>
-                <a href="{{ supplier.get_absolute_url }}">{{ supplier.name }}</a>
-                </td>
-                <td></td>
-                <td></td>
-            </tr>
-        {% empty %}
-            <p>No suppliers</p>
-        {% endfor %}
-    </table>    
-       
+    <table class="tab-list" id="main-results-search">
+      {% include 'includes/supplier_table.html' with  supplier_query=supplier_list %}
+    </table>  
+    {% load static %}
+      <script src="{% static 'ajax.js' %}"></script>
 {% endblock %}

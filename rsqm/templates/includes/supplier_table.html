@@ -1,0 +1,18 @@
+{% if supplier_query %}
+    <tr class="table-head">
+              <th>Supplier</th>
+              <th>Someth</th>
+              <th>Someth</th>
+          </tr>
+            {% for supplier in supplier_query %}
+                <tr>
+                    <td>
+                    <a href="{{ supplier.get_absolute_url }}">{{ supplier.name }}</a>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+{% else %}
+  <p>No suppliers</p>
+{% endif %}
